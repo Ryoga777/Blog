@@ -1,3 +1,2 @@
 # Blog
-# Blog
-# Blog
+Semplicissimo blog in Django
