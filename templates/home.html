@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Slide -->
+<div class="container mt-4">
+    <div id="carouselPosts" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <!-- Ciclo sui post per mostrare i primi 3 -->
+            {% for object in object_list|slice:":3" %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <img src="{{ object.image}}" class="d-block w-100" alt="{{ object.title }}">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ object.title }}</h5>
+                        <h6>di: {{ object.author.first_name }} {{ object.author.last_name }}</h6>
+                        <p>{{ object.content|safe|linebreaks|truncatewords_html:10 }}</p>
+                        <a href="{{ object.get_absolute_url }}" class="btn btn-primary">Leggi di più</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselPosts" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselPosts" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+<br>
+<!-- Cards -->
+ <div class = "row col-12">
+    {% for object in object_list %}
+            <div class="card col-3">
+             <img src = "{{ object.image }}" 
+             alt="{{ object.title }}" width = 200 class="card-img-top">
+
+                <div class="card-body">
+                 <h5 class="card-title">{{ object.title }}</h5>
+                    <p class="card-text">
+                        {{ object.content|safe|linebreaks|truncatewords_html:25 }}</p>
+                 <a href="{{ object.get_absolute_url }}" class="btn btn-primary">
+                    Continua a leggere</a>
+                </div>
+            </div>
+    {% endfor %}
+</div>
+</div>
+
+<!-- Paginazione -->
+
+    <div>
+        {% if page_obj.has_previous %}
+            <a href="?page= {{ page_obj.previous_page_number }}">Post più recenti </a>
+        {% endif %}
+
+        {% if page_obj.has_next %}
+            <a href="?page= {{ page_obj.next_page_number }}">Post più vecchi</a>
+        {% endif %}
+    </div>
+{% endblock content %}

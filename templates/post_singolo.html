@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block head_title %}{{ block.super }} | {{ object.title }}{% endblock head_title %}
+
+    {% block content %}
+
+        <h1>{{ object.title }}</h1>
+        <h4> Creato il: {{ object.date }} da {{ object.author.first_name }} {{ object.author.last_name }}</h4>
+        <img src="{{ object.image.url }}" width = 70% alt=" {{ object.title }}"><br />
+        <p>{{ object.content|safe|linebreaks}}</p>
+
+    {%endblock content%}
